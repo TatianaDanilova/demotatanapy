@@ -54,3 +54,29 @@ class Database():
 
         except Exception:
             return []
+
+    def sale_sum(self, partner_name: str):
+        if not self.connection:
+            return []
+        try:
+            cursor = self.connection.cursor()
+
+            query = f'''
+            select sum(history_products_count) as result_pr
+            from history 
+            where partner_name_fk = '{partner_name}'
+            '''
+
+            cursor.execute(query, {partner_name},)
+            sales_data = [
+                {
+                    "procent": row[0],
+                }
+                for row in cursor.fetchall()
+            ]
+
+            cursor.close()
+            return sales_data
+
+        except Exception:
+            return []

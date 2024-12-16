@@ -8,8 +8,6 @@ from PySide6.QtWidgets import (
     QScrollArea
 )
 
-
-
 class interface(QFrame):
     def __init__ (self, parent, controller):
         QFrame.__init__(self, parent)
@@ -74,19 +72,30 @@ class interface(QFrame):
             self.partner_card.setObjectName("partner_card")
             # вертикальная разметка для карточки
             self.vbox = QVBoxLayout(self.partner_card)
+
+
+
             # первый лебл
-            self.label1 = QLabel(f'{partner["name"]}')
+            self.label1 = QLabel(f'{partner["type"].replace(" ", "")} | {partner["name"]}')
             self.vbox.addWidget(self.label1)
             self.label1.setObjectName("company_name")
 
+            self.label_procent = QLabel(f"{self.take_sale_cont(partner['name'])}%")
+            self.label_procent.setObjectName("label_procent")
+            self.vbox.addWidget(self.label_procent)
 
-            self.label2 = QLabel(f'Телефон {partner["phone"]}')
+
+            self.label2 = QLabel(f'Директор: {partner["director"]}')
             self.vbox.addWidget(self.label2)
-            self.label2.setObjectName("company_phone")
+            self.label2.setObjectName("company_director")
 
-            self.label3 = QLabel(f'ИНН {partner["inn"]}')
+            self.label3 = QLabel(f'+7 {partner["phone"]}')
             self.vbox.addWidget(self.label3)
-            self.label3.setObjectName("company_inn")
+            self.label3.setObjectName("company_phone")
+
+            self.label4 = QLabel(f'Рейтинг:  {partner["rate"]}')
+            self.vbox.addWidget(self.label4)
+            self.label4.setObjectName("company_rate")
 
             self.btn_to_partner_info = QPushButton("Подробнее")
             self.vbox.addWidget(self.btn_to_partner_info)
@@ -98,5 +107,19 @@ class interface(QFrame):
     def ptint_btn_obj_name(self):
         sender = self.sender()
         print("button name: ", sender.objectName())
+
+    def take_sale_cont(self, partner_name: str):
+        count: int = self.connection.sale_sum(partner_name)[0]['procent']
+        if (count == None):
+            return 0
+        if (count > 300000):
+            return 15
+        if (count > 50000):
+            return 10
+        if (count >  10000):
+            return 5
+        return 5
+
+
 
 

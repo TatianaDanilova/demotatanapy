@@ -36,8 +36,6 @@ class Application(QWidget):
         frame = QVBoxLayout(self)
         frame.addWidget(self.frames_container)
 
-
-
 styles = '''
 QLabel {
     color: #000000;
@@ -49,6 +47,10 @@ QPushButton{
     color: #000000;
     font-size: 20px;
 }
+#label_procent{
+    qproperty-alignment: AlignRight;
+}
+
 #partner_card {
     background: #F4E8D3;
     border: 1px solid #000000;
