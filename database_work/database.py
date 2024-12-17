@@ -30,7 +30,6 @@ class Database():
             query = '''
             select partner_name, partner_phone, partner_type, partner_mail,
             partner_ur_addr, partner_inn, partner_rate, partner_director
-            
             from partners'''
 
             cursor.execute(query)
@@ -48,7 +47,6 @@ class Database():
                 }
                 for row in cursor.fetchall()
             ]
-
             cursor.close()
             return partner
 

@@ -8,9 +8,12 @@ from PySide6.QtWidgets import (
     QScrollArea
 )
 
+from Frames import AddPartner
+
 class interface(QFrame):
     def __init__ (self, parent, controller):
         QFrame.__init__(self, parent)
+
         self.controller = controller
         self.connection = controller.connection
         self.update_start_values()
@@ -36,8 +39,7 @@ class interface(QFrame):
 
         # создание кнопки внизу фрейма
         self.btn = QPushButton("Добавить партнера")
-        self.btn.clicked.connect(
-            lambda : print("Добавить"))
+        self.btn.clicked.connect(self.open_new_frame)
         # добавление кнопки в контейнер
         self.widgets_layout_conainer.addWidget(self.btn)
 
@@ -74,35 +76,43 @@ class interface(QFrame):
             self.vbox = QVBoxLayout(self.partner_card)
 
 
-
-            # первый лебл
+            # тип | название компании
             self.label1 = QLabel(f'{partner["type"].replace(" ", "")} | {partner["name"]}')
             self.vbox.addWidget(self.label1)
             self.label1.setObjectName("company_name")
 
+            # процент
             self.label_procent = QLabel(f"{self.take_sale_cont(partner['name'])}%")
             self.label_procent.setObjectName("label_procent")
             self.vbox.addWidget(self.label_procent)
 
-
+            # директор
             self.label2 = QLabel(f'Директор: {partner["director"]}')
             self.vbox.addWidget(self.label2)
             self.label2.setObjectName("company_director")
 
+            # телефон
             self.label3 = QLabel(f'+7 {partner["phone"]}')
             self.vbox.addWidget(self.label3)
             self.label3.setObjectName("company_phone")
 
+            # рейтинг
             self.label4 = QLabel(f'Рейтинг:  {partner["rate"]}')
             self.vbox.addWidget(self.label4)
             self.label4.setObjectName("company_rate")
 
+            # кнопка подробнее
             self.btn_to_partner_info = QPushButton("Подробнее")
             self.vbox.addWidget(self.btn_to_partner_info)
+
 
             # добавление карточки в лайаут для карточки
             self.card_layout.addWidget(self.partner_card)
         return self.scroll_area_widget_container
+
+
+    def open_new_frame(self):
+        self.controller.switch_to_new_frame(AddPartner.interface_reg_parther)
 
     def ptint_btn_obj_name(self):
         sender = self.sender()

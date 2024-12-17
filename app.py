@@ -7,7 +7,7 @@ from PySide6.QtWidgets import (
 QVBoxLayout,
     QWidget)
 
-from Frames import firstFrame
+from Frames import Partners, AddPartner
 from database_work import database
 
 class Application(QWidget):
@@ -28,13 +28,27 @@ class Application(QWidget):
 
         self.connection = database.Database()
 
-        self.firstFrame = firstFrame.interface(self, self)
+        self.firstFrame = Partners.interface(self, self)
+        self.RegPartner = AddPartner.interface_reg_parther(self, self)
 
         self.frames_container = QStackedWidget()
         self.frames_container.addWidget(self.firstFrame)
+        self.frames_container.addWidget(self.RegPartner)
+
 
         frame = QVBoxLayout(self)
         frame.addWidget(self.frames_container)
+
+    def switch_to_new_frame(self, frame, current_partner_name: str = None):
+        current_frame_to_show = frame(self, self)
+
+        print("Переданное объектное имя: ", current_frame_to_show)
+
+        self.frames_container.removeWidget(current_frame_to_show)
+
+        self.frames_container.addWidget(current_frame_to_show)
+        self.frames_container.setCurrentWidget(current_frame_to_show)
+
 
 styles = '''
 QLabel {
@@ -47,6 +61,10 @@ QPushButton{
     color: #000000;
     font-size: 20px;
 }
+QLineEdit{
+    height: 30px;
+}
+
 #label_procent{
     qproperty-alignment: AlignRight;
 }
