@@ -7,7 +7,8 @@ from PySide6.QtWidgets import (
 QVBoxLayout,
     QWidget)
 
-from Frames import Partners, AddPartner
+import PartnerStaticName
+from Frames import Partners, AddPartner, PartnerInfo
 from database_work import database
 
 class Application(QWidget):
@@ -40,6 +41,9 @@ class Application(QWidget):
         frame.addWidget(self.frames_container)
 
     def switch_to_new_frame(self, frame, current_partner_name: str = None):
+        if current_partner_name != None:
+            PartnerStaticName.Partner.set_name(current_partner_name)
+
         current_frame_to_show = frame(self, self)
 
         print("Переданное объектное имя: ", current_frame_to_show)
@@ -48,6 +52,8 @@ class Application(QWidget):
 
         self.frames_container.addWidget(current_frame_to_show)
         self.frames_container.setCurrentWidget(current_frame_to_show)
+
+
 
 
 styles = '''
@@ -78,6 +84,14 @@ QLineEdit{
     color: #000000;
     font-size: 20px;
 }
+#PartnerInfo {
+    background: #F4E8D3;
+}
+
+#TitleInfo{
+    font-weight: bold;
+}
+
 #heading1 {
     color: #000000;
     qproperty-alignment: AlignCenter;

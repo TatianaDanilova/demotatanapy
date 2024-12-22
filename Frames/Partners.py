@@ -8,7 +8,7 @@ from PySide6.QtWidgets import (
     QScrollArea
 )
 
-from Frames import AddPartner
+from Frames import AddPartner, PartnerInfo
 
 class interface(QFrame):
     def __init__ (self, parent, controller):
@@ -103,6 +103,8 @@ class interface(QFrame):
 
             # кнопка подробнее
             self.btn_to_partner_info = QPushButton("Подробнее")
+            self.btn_to_partner_info.setObjectName(f"{partner['name']}")
+            self.btn_to_partner_info.clicked.connect(self.open_single_partner_info)
             self.vbox.addWidget(self.btn_to_partner_info)
 
 
@@ -114,9 +116,14 @@ class interface(QFrame):
     def open_new_frame(self):
         self.controller.switch_to_new_frame(AddPartner.interface_reg_parther)
 
+    def open_single_partner_info(self):
+        sender = self.sender()
+        self.controller.switch_to_new_frame(PartnerInfo.interfacePartnerInfo, sender.objectName())
+
     def ptint_btn_obj_name(self):
         sender = self.sender()
         print("button name: ", sender.objectName())
+
 
     def take_sale_cont(self, partner_name: str):
         count: int = self.connection.sale_sum(partner_name)[0]['procent']
