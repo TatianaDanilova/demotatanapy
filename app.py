@@ -71,6 +71,11 @@ QLineEdit{
     height: 30px;
 }
 
+QTreeWidget{
+    background: #F4E8D3;
+    border: 1px solid #000000;
+}
+
 #label_procent{
     qproperty-alignment: AlignRight;
 }

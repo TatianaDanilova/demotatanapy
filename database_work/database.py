@@ -56,6 +56,38 @@ class Database():
         except Exception:
             return []
 
+
+    def take_history_information(self, partner_name: str):
+        if not self.connection:
+            return []
+        try:
+            cursor = self.connection.cursor()
+
+            query = f"""
+            select *
+            from history
+            
+            where partner_name_fk = '{partner_name}'"""
+
+            cursor.execute(query)
+
+            partners = []
+            for row in cursor.fetchall():
+                partners.append({
+                    "product_name_fk": row[0].strip(),
+                    "partner_name_fk": row[1].strip(),
+                    "history_products_count": str(row[2]).strip(),
+                    "history_sale_date": str(row[3]).strip()
+                })
+
+            cursor.close()
+            return partners
+
+        except Exception:
+            return []
+
+
+
     def sale_sum(self, partner_name: str):
         if not self.connection:
             return []

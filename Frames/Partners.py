@@ -8,7 +8,7 @@ from PySide6.QtWidgets import (
     QScrollArea
 )
 
-from Frames import AddPartner, PartnerInfo
+from Frames import AddPartner, PartnerInfo, History
 
 class interface(QFrame):
     def __init__ (self, parent, controller):

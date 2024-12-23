@@ -8,7 +8,7 @@ from PySide6.QtWidgets import (
 )
 
 import PartnerStaticName
-from Frames import AddPartner, Partners, UpdatePartnerInfo
+from Frames import AddPartner, Partners, UpdatePartnerInfo, History
 
 
 class interfacePartnerInfo(QFrame):
@@ -54,6 +54,10 @@ class interfacePartnerInfo(QFrame):
 
         self.widgets_layout_conainer.addWidget(self.qlabel_pattenr_title("Рейтинг партнера"))
         self.widgets_layout_conainer.addWidget(self.qlabel_pattenr_info(f"{self.single_partner_info[0]['rate']}"))
+
+        self.btn_to_history = QPushButton("История")
+        self.btn_to_history.clicked.connect(lambda : self.controller.switch_to_new_frame(History.interface_history))
+        self.widgets_layout_conainer.addWidget(self.btn_to_history)
 
         self.btn_update = QPushButton("Обновить партнера")
         self.btn_update.clicked.connect(lambda : self.controller.switch_to_new_frame(UpdatePartnerInfo.interface_update_parther_info))
